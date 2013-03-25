@@ -1,0 +1,105 @@
+package com.diadelaregion
+
+import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.Secured
+
+class ParejaController {
+
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
+    def index() {
+        redirect(action: "list", params: params)
+    }
+
+    @Secured(['ROLE_ADMIN'])
+    def list(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        [parejaInstanceList: Pareja.list(params), parejaInstanceTotal: Pareja.count()]
+    }
+
+    def create() {
+        [parejaInstance: new Pareja(params)]
+    }
+
+    def save() {
+        def parejaInstance = new Pareja(params)
+        if (!parejaInstance.save(flush: true)) {
+            render(view: "create", model: [parejaInstance: parejaInstance])
+            return
+        }
+
+        flash.message = message(code: 'default.created.message', args: [message(code: 'pareja.label', default: 'Pareja'), parejaInstance.id])
+        redirect(action: "show", id: parejaInstance.id)
+    }
+
+    def show(Long id) {
+        def parejaInstance = Pareja.get(id)
+        if (!parejaInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
+            redirect(action: "list")
+            return
+        }
+
+        [parejaInstance: parejaInstance]
+    }
+
+    def edit(Long id) {
+        def parejaInstance = Pareja.get(id)
+        if (!parejaInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
+            redirect(action: "list")
+            return
+        }
+
+        [parejaInstance: parejaInstance]
+    }
+
+    def update(Long id, Long version) {
+        def parejaInstance = Pareja.get(id)
+        if (!parejaInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
+            redirect(action: "list")
+            return
+        }
+
+        if (version != null) {
+            if (parejaInstance.version > version) {
+                parejaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                          [message(code: 'pareja.label', default: 'Pareja')] as Object[],
+                          "Another user has updated this Pareja while you were editing")
+                render(view: "edit", model: [parejaInstance: parejaInstance])
+                return
+            }
+        }
+
+        parejaInstance.properties = params
+
+        if (!parejaInstance.save(flush: true)) {
+            render(view: "edit", model: [parejaInstance: parejaInstance])
+            return
+        }
+
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'pareja.label', default: 'Pareja'), parejaInstance.id])
+        redirect(action: "show", id: parejaInstance.id)
+    }
+
+    @Secured(['ROLE_ADMIN'])
+    def delete(Long id) {
+        def parejaInstance = Pareja.get(id)
+        if (!parejaInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
+            redirect(action: "list")
+            return
+        }
+
+        try {
+            parejaInstance.delete(flush: true)
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
+            redirect(action: "list")
+        }
+        catch (DataIntegrityViolationException e) {
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
+            redirect(action: "show", id: id)
+        }
+    }
+}
