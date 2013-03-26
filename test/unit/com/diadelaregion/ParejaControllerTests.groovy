@@ -5,14 +5,19 @@ package com.diadelaregion
 import org.junit.*
 import grails.test.mixin.*
 
+/**
+ * ParejaControllerTests
+ * A unit test class is used to test individual methods or blocks of code without considering the surrounding infrastructure
+ */
 @TestFor(ParejaController)
 @Mock(Pareja)
 class ParejaControllerTests {
 
+
     def populateValidParams(params) {
-        assert params != null
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+      assert params != null
+      // TODO: Populate valid properties like...
+      //params["name"] = 'someValidName'
     }
 
     void testIndex() {
@@ -29,9 +34,9 @@ class ParejaControllerTests {
     }
 
     void testCreate() {
-        def model = controller.create()
+       def model = controller.create()
 
-        assert model.parejaInstance != null
+       assert model.parejaInstance != null
     }
 
     void testSave() {
@@ -56,6 +61,7 @@ class ParejaControllerTests {
         assert flash.message != null
         assert response.redirectedUrl == '/pareja/list'
 
+
         populateValidParams(params)
         def pareja = new Pareja(params)
 
@@ -73,6 +79,7 @@ class ParejaControllerTests {
 
         assert flash.message != null
         assert response.redirectedUrl == '/pareja/list'
+
 
         populateValidParams(params)
         def pareja = new Pareja(params)
@@ -93,6 +100,7 @@ class ParejaControllerTests {
         assert response.redirectedUrl == '/pareja/list'
 
         response.reset()
+
 
         populateValidParams(params)
         def pareja = new Pareja(params)

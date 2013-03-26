@@ -3,6 +3,10 @@ package com.diadelaregion
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
 
+/**
+ * ParejaController
+ * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
+ */
 class ParejaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -12,8 +16,8 @@ class ParejaController {
     }
 
     @Secured(['ROLE_ADMIN'])
-    def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+    def list() {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [parejaInstanceList: Pareja.list(params), parejaInstanceTotal: Pareja.count()]
     }
 
@@ -28,14 +32,14 @@ class ParejaController {
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'pareja.label', default: 'Pareja'), parejaInstance.id])
+		flash.message = message(code: 'default.created.message', args: [message(code: 'pareja.label', default: 'Pareja'), parejaInstance.id])
         redirect(action: "show", id: parejaInstance.id)
     }
 
-    def show(Long id) {
-        def parejaInstance = Pareja.get(id)
+    def show() {
+        def parejaInstance = Pareja.get(params.id)
         if (!parejaInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), params.id])
             redirect(action: "list")
             return
         }
@@ -43,10 +47,10 @@ class ParejaController {
         [parejaInstance: parejaInstance]
     }
 
-    def edit(Long id) {
-        def parejaInstance = Pareja.get(id)
+    def edit() {
+        def parejaInstance = Pareja.get(params.id)
         if (!parejaInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), params.id])
             redirect(action: "list")
             return
         }
@@ -54,15 +58,16 @@ class ParejaController {
         [parejaInstance: parejaInstance]
     }
 
-    def update(Long id, Long version) {
-        def parejaInstance = Pareja.get(id)
+    def update() {
+        def parejaInstance = Pareja.get(params.id)
         if (!parejaInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), params.id])
             redirect(action: "list")
             return
         }
 
-        if (version != null) {
+        if (params.version) {
+            def version = params.version.toLong()
             if (parejaInstance.version > version) {
                 parejaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                           [message(code: 'pareja.label', default: 'Pareja')] as Object[],
@@ -79,27 +84,27 @@ class ParejaController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'pareja.label', default: 'Pareja'), parejaInstance.id])
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'pareja.label', default: 'Pareja'), parejaInstance.id])
         redirect(action: "show", id: parejaInstance.id)
     }
 
     @Secured(['ROLE_ADMIN'])
-    def delete(Long id) {
-        def parejaInstance = Pareja.get(id)
+    def delete() {
+        def parejaInstance = Pareja.get(params.id)
         if (!parejaInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'pareja.label', default: 'Pareja'), params.id])
             redirect(action: "list")
             return
         }
 
         try {
             parejaInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
+			flash.message = message(code: 'default.deleted.message', args: [message(code: 'pareja.label', default: 'Pareja'), params.id])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'pareja.label', default: 'Pareja'), id])
-            redirect(action: "show", id: id)
+			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'pareja.label', default: 'Pareja'), params.id])
+            redirect(action: "show", id: params.id)
         }
     }
 }
