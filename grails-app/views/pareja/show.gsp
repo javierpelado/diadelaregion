@@ -60,6 +60,13 @@
 			</tr>
 		
 			<tr class="prop">
+				<td valign="top" class="name"><g:message code="pareja.edadesDeLosNiños.label" default="Edades De Los Niños" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: parejaInstance, field: "edadesDeLosNiños")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
 				<td valign="top" class="name"><g:message code="pareja.equipo.label" default="Equipo" /></td>
 				
 				<td valign="top" class="value">${fieldValue(bean: parejaInstance, field: "equipo")}</td>

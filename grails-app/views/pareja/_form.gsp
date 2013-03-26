@@ -42,11 +42,19 @@
 				</div>
 			</div>
 
-			<div class="control-group fieldcontain ${hasErrors(bean: parejaInstance, field: 'numeroDeNiños', 'error')} ">
-				<label for="numeroDeNiños" class="control-label"><g:message code="pareja.numeroDeNiños.label" default="Numero De Niños" /></label>
+			<div class="control-group fieldcontain ${hasErrors(bean: parejaInstance, field: 'numeroDeNiños', 'error')} required">
+				<label for="numeroDeNiños" class="control-label"><g:message code="pareja.numeroDeNiños.label" default="Numero De Niños" /><span class="required-indicator">*</span></label>
 				<div class="controls">
-					<g:textField name="numeroDeNiños" value="${parejaInstance?.numeroDeNiños}"/>
+					<g:field type="number" name="numeroDeNiños" required="" value="${parejaInstance.numeroDeNiños}"/>
 					<span class="help-inline">${hasErrors(bean: parejaInstance, field: 'numeroDeNiños', 'error')}</span>
+				</div>
+			</div>
+
+			<div class="control-group fieldcontain ${hasErrors(bean: parejaInstance, field: 'edadesDeLosNiños', 'error')} ">
+				<label for="edadesDeLosNiños" class="control-label"><g:message code="pareja.edadesDeLosNiños.label" default="Edades De Los Niños" /></label>
+				<div class="controls">
+					<g:textField name="edadesDeLosNiños" value="${parejaInstance?.edadesDeLosNiños}"/>
+					<span class="help-inline">${hasErrors(bean: parejaInstance, field: 'edadesDeLosNiños', 'error')}</span>
 				</div>
 			</div>
 
