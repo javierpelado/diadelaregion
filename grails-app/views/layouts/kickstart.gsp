@@ -10,7 +10,7 @@
     <meta name="description"	content="">
     <meta name="author"			content="">
     
-	<link rel="shortcut icon"		href="${resource(plugin: 'kickstart-with-bootstrap', dir:'images',file:'favicon.ico')}" type="image/x-icon" />
+	<link rel="shortcut icon"		href="${resource(dir: 'images', file: 'ens_logo.gif')}" type="image/x-icon" />
 	
 	<link rel="apple-touch-icon"	href="assets/ico/apple-touch-icon.png">
     <link rel="apple-touch-icon"	href="assets/ico/apple-touch-icon-72x72.png"	sizes="72x72">
@@ -50,7 +50,7 @@
 	    <g:pageProperty name="page.footer" />
 	</g:if>
 	<g:else>
-		<g:render template="/layouts/footer"/>														
+		<g:render template="/layouts/myfooter"/>														
 	</g:else>
 
 	<!-- Enable to insert additional components (e.g., modals, javascript, etc.) by any individual page -->

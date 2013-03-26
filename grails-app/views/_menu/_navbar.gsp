@@ -9,13 +9,14 @@
 			</a>
 
 			<a class="brand" href="${createLink(uri: '/')}">
-				<img class="logo" src="${resource(plugin: 'kickstart-with-bootstrap', dir:'kickstart/img',file:'grails.png')}" alt="${meta(name:'app.name')}" />
+				<img class="logo" src="${resource(dir:'images',file:'ens_logo.gif')}" alt="${meta(name:'app.name')}" />
 				${meta(name:'app.name')}
-				<small> v${meta(name:'app.version')}</small>
+				<small> 14 de Abril</small>
 			</a>
 
        		<div class="nav-collapse">
        		
+	<sec:ifLoggedIn>
        			<ul class="nav">
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#">Browse <b class="caret"></b></a>
@@ -36,6 +37,7 @@
 						</ul>
 					</li>
 				</ul>
+	</sec:ifLoggedIn>
 
 	  			<div class="pull-left">
 					<%--Left-side entries--%>

@@ -63,5 +63,7 @@ grails.project.dependency.resolution = {
         compile ':heroku:1.0.1'
         compile ':cloud-support:1.0.8'
 
+        compile ":spring-security-core:1.2.7.3"
+
     }
 }
