@@ -53,7 +53,6 @@ class BootStrap {
 			assert Role.count() == 2
 			assert UserRole.count() == 1
 //		}
-		}
 
 	      case "development":
 			def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
@@ -68,6 +67,7 @@ class BootStrap {
 			assert Role.count() == 2
 			assert UserRole.count() == 1
  
+		}
 	}
 
 	def destroy = { } 
