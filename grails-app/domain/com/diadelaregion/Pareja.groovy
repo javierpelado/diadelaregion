@@ -7,7 +7,8 @@ class Pareja {
 	String nombreMujer
 	String apellidosMujer
 	String email
-	String numeroDeNiños
+	Integer numeroDeNiños
+	String edadesDeLosNiños
 	String sector
 	Integer equipo
 	Date dateCreated
@@ -20,6 +21,7 @@ class Pareja {
 		apellidosMujer(maxSize:100)
       	email(email:true)
 		numeroDeNiños()
+		edadesDeLosNiños()
       	equipo()
       	sector(inList:["Almagro",
 		"Illescas",
