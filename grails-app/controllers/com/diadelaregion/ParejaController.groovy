@@ -11,6 +11,10 @@ class ParejaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+     // Export service provided by Export plugin    
+    def exportService
+    def grailsApplication  //inject GrailsApplication
+
     def index() {
         redirect(action: "list", params: params)
     }
@@ -18,7 +22,17 @@ class ParejaController {
     @Secured(['ROLE_ADMIN'])
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [parejaInstanceList: Pareja.list(params), parejaInstanceTotal: Pareja.count()]
+//        [parejaInstanceList: Pareja.list(params), parejaInstanceTotal: Pareja.count()]
+
+        if(!params.max) params.max = 10
+
+        if(params?.format && params.format != "html"){
+            response.contentType = grailsApplication.config.grails.mime.types[params.format]
+            response.setHeader("Content-disposition", "attachment; filename=parejas.${params.extension}")
+
+            exportService.export(params.format, response.outputStream,Pareja.list(params), [:], [:])
+        }
+        [ parejaInstanceList: Pareja.list( params ), parejaInstanceTotal: Pareja.count() ]
     }
 
     def create() {
@@ -33,7 +47,7 @@ class ParejaController {
         }
 
         sendMail {
-          to parejaInstance.email
+          to parejaInstance.email, "pelado.garcia.ens+diadelaregion@gmail.com"
           subject "Te has registrado para el Día de la Región en Toledo el 14 de Abril"
           html g.render(template:"myMailTemplate", model: [parejaInstance: parejaInstance])
         }
