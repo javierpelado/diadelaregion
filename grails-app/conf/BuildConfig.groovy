@@ -65,5 +65,8 @@ grails.project.dependency.resolution = {
         compile ':webxml:1.4.1'
         compile ":heroku:1.0.1"
         compile ':cloud-support:1.0.8'
+
+        compile ":export:1.5"
+        compile ":mail:1.0.1"
     }
 }

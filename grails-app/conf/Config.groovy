@@ -96,3 +96,16 @@ grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.diadelare
 grails.plugins.springsecurity.authority.className = 'com.diadelaregion.Role'
 
 grails.config.defaults.locations = [KickstartResources]
+
+grails {
+   mail {
+     host = "smtp.gmail.com"
+     port = 465
+     username = "pelado.garcia.ens@gmail.com"
+     password = "miserpelado"
+     props = ["mail.smtp.auth":"true",             
+              "mail.smtp.socketFactory.port":"465",
+              "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+              "mail.smtp.socketFactory.fallback":"false"]
+   }
+}

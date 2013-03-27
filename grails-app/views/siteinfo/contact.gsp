@@ -19,7 +19,7 @@
 			<h1><g:message code="default.contact.address"/></h1>
 				<address>
 					<strong>Juan Pelado y Aurora García</strong><br>
-					 Responsables del sector Centro<br>
+					 Responsables de la región Centro<br>
 					 <br>
 				</address>
 				<address>

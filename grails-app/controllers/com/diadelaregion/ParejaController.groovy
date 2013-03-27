@@ -32,6 +32,12 @@ class ParejaController {
             return
         }
 
+        sendMail {
+          to parejaInstance.email
+          subject "Te has registrado para el Día de la Región en Toledo el 14 de Abril"
+          html g.render(template:"myMailTemplate", model: [parejaInstance: parejaInstance])
+        }
+
 		flash.message = message(code: 'default.created.message', args: [message(code: 'pareja.label', default: 'Pareja'), parejaInstance.id])
         redirect(action: "show", id: parejaInstance.id)
     }

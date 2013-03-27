@@ -1,6 +1,11 @@
 <ul class="nav pull-right">
 	<li class="dropdown dropdown-btn">
 		
+		<a href="${createLink(uri: '/contact')}">
+			<i class="icon-envelope"></i>
+			<g:message code="default.contact.label"/>
+		</a>
+		<%--
 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
     		<i class="icon-info-sign"></i>
 			<g:message code="default.info.label"/> <b class="caret"></b>
@@ -9,7 +14,7 @@
 		<ul class="dropdown-menu">
 		
 			<%-- Note: Links to pages without controller are redirected in conf/UrlMappings.groovy --%>
-			<li class="">
+			<%--<li class="">
 				<a href="${createLink(uri: '/contact')}">
 					<i class="icon-envelope"></i>
 					<g:message code="default.contact.label"/>
